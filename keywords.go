@@ -11,7 +11,7 @@ type KeywordDetails struct {
 // GetKeywordDetails get keyword details by id.
 //
 // https://developers.themoviedb.org/3/keywords/get-keyword-details
-func (c *Client) GetKeywordDetails(
+func (s *Client) GetKeywordDetails(
 	id int,
 ) (*KeywordDetails, error) {
 	tmdbURL := fmt.Sprintf(
@@ -19,10 +19,10 @@ func (c *Client) GetKeywordDetails(
 		baseURL,
 		keywordURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	keywordDetails := KeywordDetails{}
-	if err := c.get(tmdbURL, &keywordDetails); err != nil {
+	if err := s.get(tmdbURL, &keywordDetails); err != nil {
 		return nil, err
 	}
 	return &keywordDetails, nil
@@ -58,21 +58,21 @@ type KeywordMovies struct {
 // method as it is much more flexible.
 //
 // https://developers.themoviedb.org/3/keywords/get-movies-by-keyword
-func (c *Client) GetKeywordMovies(
+func (s *Client) GetKeywordMovies(
 	id int,
 	urlOptions map[string]string,
 ) (*KeywordMovies, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movies?api_key=%s%s",
 		baseURL,
 		keywordURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	keywordMovies := KeywordMovies{}
-	if err := c.get(tmdbURL, &keywordMovies); err != nil {
+	if err := s.get(tmdbURL, &keywordMovies); err != nil {
 		return nil, err
 	}
 	return &keywordMovies, nil

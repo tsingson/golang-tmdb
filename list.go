@@ -41,21 +41,21 @@ type ListDetails struct {
 // GetListDetails get the details of a list.
 //
 // https://developers.themoviedb.org/3/lists/get-list-details
-func (c *Client) GetListDetails(
+func (s *Client) GetListDetails(
 	id int64,
 	urlOptions map[string]string,
 ) (*ListDetails, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
 		baseURL,
 		listURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	ListDetails := ListDetails{}
-	if err := c.get(tmdbURL, &ListDetails); err != nil {
+	if err := s.get(tmdbURL, &ListDetails); err != nil {
 		return nil, err
 	}
 	return &ListDetails, nil
@@ -70,21 +70,21 @@ type ListItemStatus struct {
 // GetListItemStatus check if a movie has already been added to the list.
 //
 // https://developers.themoviedb.org/3/lists/check-item-status
-func (c *Client) GetListItemStatus(
+func (s *Client) GetListItemStatus(
 	id int64,
 	urlOptions map[string]string,
 ) (*ListItemStatus, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/item_status?api_key=%s%s",
 		baseURL,
 		listURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	listItemStatus := ListItemStatus{}
-	if err := c.get(tmdbURL, &listItemStatus); err != nil {
+	if err := s.get(tmdbURL, &listItemStatus); err != nil {
 		return nil, err
 	}
 	return &listItemStatus, nil
@@ -107,17 +107,17 @@ type ListCreate struct {
 // CreateList creates a list.
 //
 // https://developers.themoviedb.org/3/lists/create-list
-func (c *Client) CreateList(
+func (s *Client) CreateList(
 	list *ListCreate,
 ) (*ListResponse, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list?api_key=%s&session_id=%s",
 		baseURL,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 	)
 	createList := ListResponse{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		list,
 		http.MethodPost,
@@ -136,7 +136,7 @@ type ListMedia struct {
 // AddMovie add a movie to a list.
 //
 // https://developers.themoviedb.org/3/lists/add-movie
-func (c *Client) AddMovie(
+func (s *Client) AddMovie(
 	listID int,
 	mediaID *ListMedia,
 ) (*Response, error) {
@@ -144,11 +144,11 @@ func (c *Client) AddMovie(
 		"%s/list/%d/add_item?api_key=%s&session_id=%s",
 		baseURL,
 		listID,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 	)
 	response := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		mediaID,
 		http.MethodPost,
@@ -162,7 +162,7 @@ func (c *Client) AddMovie(
 // RemoveMovie remove a movie from a list.
 //
 // https://developers.themoviedb.org/3/lists/remove-movie
-func (c *Client) RemoveMovie(
+func (s *Client) RemoveMovie(
 	listID int,
 	mediaID *ListMedia,
 ) (*Response, error) {
@@ -170,11 +170,11 @@ func (c *Client) RemoveMovie(
 		"%s/list/%d/remove_item?api_key=%s&session_id=%s",
 		baseURL,
 		listID,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 	)
 	response := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		mediaID,
 		http.MethodPost,
@@ -188,7 +188,7 @@ func (c *Client) RemoveMovie(
 // ClearList clear all of the items from a list.
 //
 // https://developers.themoviedb.org/3/lists/clear-list
-func (c *Client) ClearList(
+func (s *Client) ClearList(
 	listID int,
 	confirm bool,
 ) (*Response, error) {
@@ -196,12 +196,12 @@ func (c *Client) ClearList(
 		"%s/list/%d/clear?api_key=%s&session_id=%s&confirm=%t",
 		baseURL,
 		listID,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		confirm,
 	)
 	response := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		listID,
 		http.MethodPost,
@@ -215,18 +215,18 @@ func (c *Client) ClearList(
 // DeleteList deletes a list.
 //
 // https://developers.themoviedb.org/3/lists/delete-list
-func (c *Client) DeleteList(
+func (s *Client) DeleteList(
 	listID int,
 ) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d?api_key=%s&session_id=%s",
 		baseURL,
 		listID,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 	)
 	response := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		nil,
 		http.MethodDelete,

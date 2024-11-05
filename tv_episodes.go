@@ -79,13 +79,13 @@ type TVEpisodeVideosAppend struct {
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-details
-func (c *Client) GetTVEpisodeDetails(
+func (s *Client) GetTVEpisodeDetails(
 	id int,
 	seasonNumber int,
 	episodeNumber int,
 	urlOptions map[string]string,
 ) (*TVEpisodeDetails, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d?api_key=%s%s",
 		baseURL,
@@ -95,11 +95,11 @@ func (c *Client) GetTVEpisodeDetails(
 		seasonNumber,
 		tvEpisodeURL,
 		episodeNumber,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvEpisodeDetails := TVEpisodeDetails{}
-	if err := c.get(tmdbURL, &tvEpisodeDetails); err != nil {
+	if err := s.get(tmdbURL, &tvEpisodeDetails); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeDetails, nil
@@ -133,21 +133,21 @@ type TVEpisodeChanges struct {
 // the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-changes
-func (c *Client) GetTVEpisodeChanges(
+func (s *Client) GetTVEpisodeChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*TVEpisodeChanges, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sepisode/%d/changes?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvEpisodeChanges := TVEpisodeChanges{}
-	if err := c.get(tmdbURL, &tvEpisodeChanges); err != nil {
+	if err := s.get(tmdbURL, &tvEpisodeChanges); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeChanges, nil
@@ -188,7 +188,7 @@ type TVEpisodeCredits struct {
 // GetTVEpisodeCredits get the credits (cast, crew and guest stars) for a TV episode.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-credits
-func (c *Client) GetTVEpisodeCredits(
+func (s *Client) GetTVEpisodeCredits(
 	id int,
 	seasonNumber int,
 	episodeNumber int,
@@ -202,10 +202,10 @@ func (c *Client) GetTVEpisodeCredits(
 		seasonNumber,
 		tvEpisodeURL,
 		episodeNumber,
-		c.apiKey,
+		s.apiKey,
 	)
 	tvEpisodeCredits := TVEpisodeCredits{}
-	if err := c.get(tmdbURL, &tvEpisodeCredits); err != nil {
+	if err := s.get(tmdbURL, &tvEpisodeCredits); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeCredits, nil
@@ -229,7 +229,7 @@ type TVEpisodeExternalIDs struct {
 // *Defunct or no longer available as a service.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-external-ids
-func (c *Client) GetTVEpisodeExternalIDs(
+func (s *Client) GetTVEpisodeExternalIDs(
 	id int,
 	seasonNumber int,
 	episodeNumber int,
@@ -243,10 +243,10 @@ func (c *Client) GetTVEpisodeExternalIDs(
 		seasonNumber,
 		tvEpisodeURL,
 		episodeNumber,
-		c.apiKey,
+		s.apiKey,
 	)
 	tvEpisodeExternalIDs := TVEpisodeExternalIDs{}
-	if err := c.get(tmdbURL, &tvEpisodeExternalIDs); err != nil {
+	if err := s.get(tmdbURL, &tvEpisodeExternalIDs); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeExternalIDs, nil
@@ -277,7 +277,7 @@ type TVEpisodeImages struct {
 // This should be a comma separated value like so: include_image_language=en,null.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-images
-func (c *Client) GetTVEpisodeImages(
+func (s *Client) GetTVEpisodeImages(
 	id int,
 	seasonNumber int,
 	episodeNumber int,
@@ -291,10 +291,10 @@ func (c *Client) GetTVEpisodeImages(
 		seasonNumber,
 		tvEpisodeURL,
 		episodeNumber,
-		c.apiKey,
+		s.apiKey,
 	)
 	tvEpisodeImages := TVEpisodeImages{}
-	if err := c.get(tmdbURL, &tvEpisodeImages); err != nil {
+	if err := s.get(tmdbURL, &tvEpisodeImages); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeImages, nil
@@ -318,7 +318,7 @@ type TVEpisodeTranslations struct {
 // GetTVEpisodeTranslations get the translation data for an episode.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-translations
-func (c *Client) GetTVEpisodeTranslations(
+func (s *Client) GetTVEpisodeTranslations(
 	id int,
 	seasonNumber int,
 	episodeNumber int,
@@ -332,10 +332,10 @@ func (c *Client) GetTVEpisodeTranslations(
 		seasonNumber,
 		tvEpisodeURL,
 		episodeNumber,
-		c.apiKey,
+		s.apiKey,
 	)
 	tvEpisodeTranslations := TVEpisodeTranslations{}
-	if err := c.get(tmdbURL, &tvEpisodeTranslations); err != nil {
+	if err := s.get(tmdbURL, &tvEpisodeTranslations); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeTranslations, nil
@@ -365,13 +365,13 @@ type TVEpisodeVideos struct {
 // GetTVEpisodeVideos get the videos that have been added to a TV episode.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-videos
-func (c *Client) GetTVEpisodeVideos(
+func (s *Client) GetTVEpisodeVideos(
 	id int,
 	seasonNumber int,
 	episodeNumber int,
 	urlOptions map[string]string,
 ) (*TVEpisodeVideos, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d/videos?api_key=%s%s",
 		baseURL,
@@ -381,11 +381,11 @@ func (c *Client) GetTVEpisodeVideos(
 		seasonNumber,
 		tvEpisodeURL,
 		episodeNumber,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvEpisodeVideos := TVEpisodeVideos{}
-	if err := c.get(tmdbURL, &tvEpisodeVideos); err != nil {
+	if err := s.get(tmdbURL, &tvEpisodeVideos); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeVideos, nil

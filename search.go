@@ -16,21 +16,21 @@ type SearchCompanies struct {
 // GetSearchCompanies search for companies.
 //
 // https://developers.themoviedb.org/3/search/search-companies
-func (c *Client) GetSearchCompanies(
+func (s *Client) GetSearchCompanies(
 	query string,
 	urlOptions map[string]string,
 ) (*SearchCompanies, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%scompany?api_key=%s&query=%s%s",
 		baseURL,
 		searchURL,
-		c.apiKey,
+		s.apiKey,
 		url.QueryEscape(query),
 		options,
 	)
 	SearchCompanies := SearchCompanies{}
-	if err := c.get(tmdbURL, &SearchCompanies); err != nil {
+	if err := s.get(tmdbURL, &SearchCompanies); err != nil {
 		return nil, err
 	}
 	return &SearchCompanies, nil
@@ -47,21 +47,21 @@ type SearchCollections struct {
 // GetSearchCollections search for collections.
 //
 // https://developers.themoviedb.org/3/search/search-collections
-func (c *Client) GetSearchCollections(
+func (s *Client) GetSearchCollections(
 	query string,
 	urlOptions map[string]string,
 ) (*SearchCollections, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%scollection?api_key=%s&query=%s%s",
 		baseURL,
 		searchURL,
-		c.apiKey,
+		s.apiKey,
 		url.QueryEscape(query),
 		options,
 	)
 	searchCollections := SearchCollections{}
-	if err := c.get(tmdbURL, &searchCollections); err != nil {
+	if err := s.get(tmdbURL, &searchCollections); err != nil {
 		return nil, err
 	}
 	return &searchCollections, nil
@@ -78,21 +78,21 @@ type SearchKeywords struct {
 // GetSearchKeywords search for keywords.
 //
 // https://developers.themoviedb.org/3/search/search-keywords
-func (c *Client) GetSearchKeywords(
+func (s *Client) GetSearchKeywords(
 	query string,
 	urlOptions map[string]string,
 ) (*SearchKeywords, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%skeyword?api_key=%s&query=%s%s",
 		baseURL,
 		searchURL,
-		c.apiKey,
+		s.apiKey,
 		url.QueryEscape(query),
 		options,
 	)
 	searchKeywords := SearchKeywords{}
-	if err := c.get(tmdbURL, &searchKeywords); err != nil {
+	if err := s.get(tmdbURL, &searchKeywords); err != nil {
 		return nil, err
 	}
 	return &searchKeywords, nil
@@ -109,21 +109,21 @@ type SearchMovies struct {
 // GetSearchMovies search for keywords.
 //
 // https://developers.themoviedb.org/3/search/search-movies
-func (c *Client) GetSearchMovies(
+func (s *Client) GetSearchMovies(
 	query string,
 	urlOptions map[string]string,
 ) (*SearchMovies, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s&query=%s%s",
 		baseURL,
 		searchURL,
-		c.apiKey,
+		s.apiKey,
 		url.QueryEscape(query),
 		options,
 	)
 	searchMovies := SearchMovies{}
-	if err := c.get(tmdbURL, &searchMovies); err != nil {
+	if err := s.get(tmdbURL, &searchMovies); err != nil {
 		return nil, err
 	}
 	return &searchMovies, nil
@@ -142,21 +142,21 @@ type SearchMulti struct {
 // tv shows and people in a single request.
 //
 // https://developers.themoviedb.org/3/search/multi-search
-func (c *Client) GetSearchMulti(
+func (s *Client) GetSearchMulti(
 	query string,
 	urlOptions map[string]string,
 ) (*SearchMulti, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smulti?api_key=%s&query=%s%s",
 		baseURL,
 		searchURL,
-		c.apiKey,
+		s.apiKey,
 		url.QueryEscape(query),
 		options,
 	)
 	searchMulti := SearchMulti{}
-	if err := c.get(tmdbURL, &searchMulti); err != nil {
+	if err := s.get(tmdbURL, &searchMulti); err != nil {
 		return nil, err
 	}
 	return &searchMulti, nil
@@ -173,21 +173,21 @@ type SearchPeople struct {
 // GetSearchPeople search for people.
 //
 // https://developers.themoviedb.org/3/search/search-people
-func (c *Client) GetSearchPeople(
+func (s *Client) GetSearchPeople(
 	query string,
 	urlOptions map[string]string,
 ) (*SearchPeople, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sperson?api_key=%s&query=%s%s",
 		baseURL,
 		searchURL,
-		c.apiKey,
+		s.apiKey,
 		url.QueryEscape(query),
 		options,
 	)
 	searchPeople := SearchPeople{}
-	if err := c.get(tmdbURL, &searchPeople); err != nil {
+	if err := s.get(tmdbURL, &searchPeople); err != nil {
 		return nil, err
 	}
 	return &searchPeople, nil
@@ -204,21 +204,21 @@ type SearchTVShows struct {
 // GetSearchTVShow search for a TV Show.
 //
 // https://developers.themoviedb.org/3/search/search-tv-shows
-func (c *Client) GetSearchTVShow(
+func (s *Client) GetSearchTVShow(
 	query string,
 	urlOptions map[string]string,
 ) (*SearchTVShows, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s&query=%s%s",
 		baseURL,
 		searchURL,
-		c.apiKey,
+		s.apiKey,
 		url.QueryEscape(query),
 		options,
 	)
 	searchTVShows := SearchTVShows{}
-	if err := c.get(tmdbURL, &searchTVShows); err != nil {
+	if err := s.get(tmdbURL, &searchTVShows); err != nil {
 		return nil, err
 	}
 	return &searchTVShows, nil

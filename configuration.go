@@ -38,14 +38,14 @@ type ConfigurationAPI struct {
 // change feed.
 //
 // https://developers.themoviedb.org/3/configuration/get-api-configuration
-func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
+func (s *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/configuration?api_key=%s",
 		baseURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	configurationAPI := ConfigurationAPI{}
-	if err := c.get(tmdbURL, &configurationAPI); err != nil {
+	if err := s.get(tmdbURL, &configurationAPI); err != nil {
 		return nil, err
 	}
 	return &configurationAPI, nil
@@ -62,7 +62,7 @@ type ConfigurationCountries []struct {
 // (ISO 3166-1 tags) used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-countries
-func (c *Client) GetConfigurationCountries() (
+func (s *Client) GetConfigurationCountries() (
 	*ConfigurationCountries,
 	error,
 ) {
@@ -70,10 +70,10 @@ func (c *Client) GetConfigurationCountries() (
 		"%s%scountries?api_key=%s",
 		baseURL,
 		configurationURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	configurationCountries := ConfigurationCountries{}
-	if err := c.get(tmdbURL, &configurationCountries); err != nil {
+	if err := s.get(tmdbURL, &configurationCountries); err != nil {
 		return nil, err
 	}
 	return &configurationCountries, nil
@@ -88,15 +88,15 @@ type ConfigurationJobs []struct {
 // GetConfigurationJobs get a list of the jobs and departments we use on TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-jobs
-func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
+func (s *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%sjobs?api_key=%s",
 		baseURL,
 		configurationURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	configurationJobs := ConfigurationJobs{}
-	if err := c.get(tmdbURL, &configurationJobs); err != nil {
+	if err := s.get(tmdbURL, &configurationJobs); err != nil {
 		return nil, err
 	}
 	return &configurationJobs, nil
@@ -113,7 +113,7 @@ type ConfigurationLanguages []struct {
 // (ISO 639-1 tags) used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-languages
-func (c *Client) GetConfigurationLanguages() (
+func (s *Client) GetConfigurationLanguages() (
 	*ConfigurationLanguages,
 	error,
 ) {
@@ -121,10 +121,10 @@ func (c *Client) GetConfigurationLanguages() (
 		"%s%slanguages?api_key=%s",
 		baseURL,
 		configurationURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	configurationLanguages := ConfigurationLanguages{}
-	if err := c.get(tmdbURL, &configurationLanguages); err != nil {
+	if err := s.get(tmdbURL, &configurationLanguages); err != nil {
 		return nil, err
 	}
 	return &configurationLanguages, nil
@@ -156,16 +156,16 @@ type ConfigurationPrimaryTranslations []string
 // our website translation project.
 //
 // https://developers.themoviedb.org/3/configuration/get-primary-translations
-func (c *Client) GetConfigurationPrimaryTranslations() (
+func (s *Client) GetConfigurationPrimaryTranslations() (
 	*ConfigurationPrimaryTranslations,
 	error,
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s%sprimary_translations?api_key=%s",
-		baseURL, configurationURL, c.apiKey,
+		baseURL, configurationURL, s.apiKey,
 	)
 	configurationPrimaryTranslations := ConfigurationPrimaryTranslations{}
-	if err := c.get(tmdbURL, &configurationPrimaryTranslations); err != nil {
+	if err := s.get(tmdbURL, &configurationPrimaryTranslations); err != nil {
 		return nil, err
 	}
 	return &configurationPrimaryTranslations, nil
@@ -182,7 +182,7 @@ type ConfigurationTimezones []struct {
 // used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-timezones
-func (c *Client) GetConfigurationTimezones() (
+func (s *Client) GetConfigurationTimezones() (
 	*ConfigurationTimezones,
 	error,
 ) {
@@ -190,10 +190,10 @@ func (c *Client) GetConfigurationTimezones() (
 		"%s%stimezones?api_key=%s",
 		baseURL,
 		configurationURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	configurationTimeZones := ConfigurationTimezones{}
-	if err := c.get(tmdbURL, &configurationTimeZones); err != nil {
+	if err := s.get(tmdbURL, &configurationTimeZones); err != nil {
 		return nil, err
 	}
 	return &configurationTimeZones, nil

@@ -26,15 +26,15 @@ type AccountDetails struct {
 // GetAccountDetails get your account details.
 //
 // https://developers.themoviedb.org/3/account/get-account-details
-func (c *Client) GetAccountDetails() (*AccountDetails, error) {
+func (s *Client) GetAccountDetails() (*AccountDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/account?api_key=%s&session_id=%s",
 		baseURL,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 	)
 	details := AccountDetails{}
-	if err := c.get(tmdbURL, &details); err != nil {
+	if err := s.get(tmdbURL, &details); err != nil {
 		return nil, err
 	}
 	return &details, nil
@@ -52,22 +52,22 @@ type AccountCreatedLists struct {
 // Will invlude private lists if you are the owner.
 //
 // https://developers.themoviedb.org/3/account/get-created-lists
-func (c *Client) GetCreatedLists(
+func (s *Client) GetCreatedLists(
 	id int,
 	urlOptions map[string]string,
 ) (*AccountCreatedLists, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/lists?api_key=%s&session_id=%s%s",
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	createdLists := AccountCreatedLists{}
-	if err := c.get(tmdbURL, &createdLists); err != nil {
+	if err := s.get(tmdbURL, &createdLists); err != nil {
 		return nil, err
 	}
 	return &createdLists, nil
@@ -84,22 +84,22 @@ type AccountFavoriteMovies struct {
 // GetFavoriteMovies get the list of your favorite movies.
 //
 // https://developers.themoviedb.org/3/account/get-favorite-movies
-func (c *Client) GetFavoriteMovies(
+func (s *Client) GetFavoriteMovies(
 	id int,
 	urlOptions map[string]string,
 ) (*AccountFavoriteMovies, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite/movies?api_key=%s&session_id=%s%s",
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	favoriteMovies := AccountFavoriteMovies{}
-	if err := c.get(tmdbURL, &favoriteMovies); err != nil {
+	if err := s.get(tmdbURL, &favoriteMovies); err != nil {
 		return nil, err
 	}
 	return &favoriteMovies, nil
@@ -116,22 +116,22 @@ type AccountFavoriteTVShows struct {
 // GetFavoriteTVShows get the list of your favorite TV shows.
 //
 // https://developers.themoviedb.org/3/account/get-favorite-tv-shows
-func (c *Client) GetFavoriteTVShows(
+func (s *Client) GetFavoriteTVShows(
 	id int,
 	urlOptions map[string]string,
 ) (*AccountFavoriteTVShows, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite/tv?api_key=%s&session_id=%s%s",
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	favoriteTVShows := AccountFavoriteTVShows{}
-	if err := c.get(tmdbURL, &favoriteTVShows); err != nil {
+	if err := s.get(tmdbURL, &favoriteTVShows); err != nil {
 		return nil, err
 	}
 	return &favoriteTVShows, nil
@@ -149,7 +149,7 @@ type AccountFavorite struct {
 // or TV show as a favorite item.
 //
 // https://developers.themoviedb.org/3/account/mark-as-favorite
-func (c *Client) MarkAsFavorite(
+func (s *Client) MarkAsFavorite(
 	id int,
 	title *AccountFavorite,
 ) (*Response, error) {
@@ -158,11 +158,11 @@ func (c *Client) MarkAsFavorite(
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 	)
 	markAsFavorite := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		title,
 		http.MethodPost,
@@ -181,22 +181,22 @@ type AccountRatedMovies struct {
 // GetRatedMovies get a list of all the movies you have rated.
 //
 // https://developers.themoviedb.org/3/account/get-rated-movies
-func (c *Client) GetRatedMovies(
+func (s *Client) GetRatedMovies(
 	id int,
 	urlOptions map[string]string,
 ) (*AccountRatedMovies, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/movies?api_key=%s&session_id=%s%s",
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	ratedMovies := AccountRatedMovies{}
-	if err := c.get(tmdbURL, &ratedMovies); err != nil {
+	if err := s.get(tmdbURL, &ratedMovies); err != nil {
 		return nil, err
 	}
 	return &ratedMovies, nil
@@ -210,22 +210,22 @@ type AccountRatedTVShows struct {
 // GetRatedTVShows get a list of all the TV shows you have rated.
 //
 // https://developers.themoviedb.org/3/account/get-rated-tv-shows
-func (c *Client) GetRatedTVShows(
+func (s *Client) GetRatedTVShows(
 	id int,
 	urlOptions map[string]string,
 ) (*AccountRatedTVShows, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/tv?api_key=%s&session_id=%s%s",
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	ratedTVShows := AccountRatedTVShows{}
-	if err := c.get(tmdbURL, &ratedTVShows); err != nil {
+	if err := s.get(tmdbURL, &ratedTVShows); err != nil {
 		return nil, err
 	}
 	return &ratedTVShows, nil
@@ -242,22 +242,22 @@ type AccountRatedTVEpisodes struct {
 // GetRatedTVEpisodes get a list of all the TV episodes you have rated.
 //
 // https://developers.themoviedb.org/3/account/get-rated-tv-episodes
-func (c *Client) GetRatedTVEpisodes(
+func (s *Client) GetRatedTVEpisodes(
 	id int,
 	urlOptions map[string]string,
 ) (*AccountRatedTVEpisodes, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/tv/episodes?api_key=%s&session_id=%s%s",
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	ratedTVEpisodes := AccountRatedTVEpisodes{}
-	if err := c.get(tmdbURL, &ratedTVEpisodes); err != nil {
+	if err := s.get(tmdbURL, &ratedTVEpisodes); err != nil {
 		return nil, err
 	}
 	return &ratedTVEpisodes, nil
@@ -271,22 +271,22 @@ type AccountMovieWatchlist struct {
 // GetMovieWatchlist get a list of all the movies you have added to your watchlist.
 //
 // https://developers.themoviedb.org/3/account/get-movie-watchlist
-func (c *Client) GetMovieWatchlist(
+func (s *Client) GetMovieWatchlist(
 	id int,
 	urlOptions map[string]string,
 ) (*AccountMovieWatchlist, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watchlist/movies?api_key=%s&session_id=%s%s",
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	movieWatchlist := AccountMovieWatchlist{}
-	if err := c.get(tmdbURL, &movieWatchlist); err != nil {
+	if err := s.get(tmdbURL, &movieWatchlist); err != nil {
 		return nil, err
 	}
 	return &movieWatchlist, nil
@@ -300,22 +300,22 @@ type AccountTVShowsWatchlist struct {
 // GetTVShowsWatchlist get a list of all the TV shows you have added to your watchlist.
 //
 // https://developers.themoviedb.org/3/account/get-tv-show-watchlist
-func (c *Client) GetTVShowsWatchlist(
+func (s *Client) GetTVShowsWatchlist(
 	id int,
 	urlOptions map[string]string,
 ) (*AccountTVShowsWatchlist, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watchlist/tv?api_key=%s&session_id=%s%s",
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	tvShowsWatchlist := AccountTVShowsWatchlist{}
-	if err := c.get(tmdbURL, &tvShowsWatchlist); err != nil {
+	if err := s.get(tmdbURL, &tvShowsWatchlist); err != nil {
 		return nil, err
 	}
 	return &tvShowsWatchlist, nil
@@ -332,7 +332,7 @@ type AccountWatchlist struct {
 // AddToWatchlist add a movie or TV show to your watchlist.
 //
 // https://developers.themoviedb.org/3/account/add-to-watchlist
-func (c *Client) AddToWatchlist(
+func (s *Client) AddToWatchlist(
 	id int,
 	title *AccountWatchlist,
 ) (*Response, error) {
@@ -341,11 +341,11 @@ func (c *Client) AddToWatchlist(
 		baseURL,
 		accountURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 	)
 	addToWatchlist := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		title,
 		http.MethodPost,

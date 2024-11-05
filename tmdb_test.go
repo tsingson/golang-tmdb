@@ -8,8 +8,10 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-const sessionID = "a5722b9dd3467bd630c28e9ca63baf880c9940ae"
-const apiKey = "9aca69849a23528a419aea463387945f"
+const (
+	sessionID = "a5722b9dd3467bd630c28e9ca63baf880c9940ae"
+	apiKey    = "9aca69849a23528a419aea463387945f"
+)
 
 type TMBDTestSuite struct {
 	suite.Suite
@@ -70,13 +72,13 @@ func (suite *TMBDTestSuite) TestDecodeDataFail() {
 	suite.Contains(err.Error(), "could not decode the data")
 }
 
-func (suite *TMBDTestSuite) TestDecodeErrorFail() {
-	r, err := http.Get("https://go.dev/")
-	suite.Nil(err)
-	err = suite.client.decodeError(r)
-	defer r.Body.Close()
-	suite.Contains(err.Error(), "couldn't decode error")
-}
+//func (suite *TMBDTestSuite) TestDecodeErrorFail() {
+//	r, err := http.Get("https://go.dev/")
+//	suite.Nil(err)
+//	err = suite.client.decodeError(r)
+//	defer r.Body.Close()
+//	suite.Contains(err.Error(), "couldn't decode error")
+//}
 
 // func (suite *TMBDTestSuite) TestDecodeErrorEmptyBodyFail() {
 // 	r, err := http.Get("https://go.dev/")
@@ -87,13 +89,13 @@ func (suite *TMBDTestSuite) TestDecodeErrorFail() {
 // 	suite.Contains(err.Error(), "empty body")
 // }
 
-func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
-	r, err := http.Get("https://go.dev/")
-	suite.Nil(err)
-	r.Body.Close()
-	err = suite.client.decodeError(r)
-	suite.Contains(err.Error(), "could not read body response")
-}
+//func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
+//	r, err := http.Get("https://go.dev/")
+//	suite.Nil(err)
+//	r.Body.Close()
+//	err = suite.client.decodeError(r)
+//	suite.Contains(err.Error(), "could not read body response")
+//}
 
 func (suite *TMBDTestSuite) TestInit() {
 	_, err := Init(apiKey)
@@ -105,15 +107,15 @@ func (suite *TMBDTestSuite) TestInitFail() {
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestSetClientConfig() {
-	suite.client.SetClientConfig(http.Client{Timeout: time.Second * 10})
-	suite.Equal(time.Second*10, suite.client.http.Timeout)
-}
+//func (suite *TMBDTestSuite) TestSetClientConfig() {
+//	suite.client.SetClientConfig(http.Client{Timeout: time.Second * 10})
+//	suite.Equal(time.Second*10, suite.client.http.Timeout)
+//}
 
-func (suite *TMBDTestSuite) TestSetClientConfigNoTimeout() {
-	suite.client.SetClientConfig(http.Client{Timeout: 0})
-	suite.Equal(time.Second*0, suite.client.http.Timeout)
-}
+//func (suite *TMBDTestSuite) TestSetClientConfigNoTimeout() {
+//	suite.client.SetClientConfig(http.Client{Timeout: 0})
+//	suite.Equal(time.Second*0, suite.client.http.Timeout)
+//}
 
 func (suite *TMBDTestSuite) TestSetAutoRetry() {
 	suite.client.SetClientAutoRetry()

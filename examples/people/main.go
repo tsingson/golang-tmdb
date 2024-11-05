@@ -9,13 +9,11 @@ import (
 
 func main() {
 	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
-
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	person, err := tmdbClient.GetPersonDetails(117642, nil)
-
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -24,13 +22,12 @@ func main() {
 
 	fmt.Println("------")
 
-	//With options
+	// With options
 	options := make(map[string]string)
 	options["append_to_response"] = "images"
 	options["language"] = "pt-BR"
 
 	person, err = tmdbClient.GetPersonDetails(117642, options)
-
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -215,21 +215,21 @@ type TVWatchProvidersAppend struct {
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-details
-func (c *Client) GetTVDetails(
+func (s *Client) GetTVDetails(
 	id int,
 	urlOptions map[string]string,
 ) (*TVDetails, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvDetails := TVDetails{}
-	if err := c.get(tmdbURL, &tvDetails); err != nil {
+	if err := s.get(tmdbURL, &tvDetails); err != nil {
 		return nil, err
 	}
 	return &tvDetails, nil
@@ -252,21 +252,21 @@ type TVAccountStates struct {
 // If it belongs to your favourite list.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-account-states
-func (c *Client) GetTVAccountStates(
+func (s *Client) GetTVAccountStates(
 	id int,
 	urlOptions map[string]string,
 ) (*TVAccountStates, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/account_states?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvAccountStates := TVAccountStates{}
-	if err := c.get(tmdbURL, &tvAccountStates); err != nil {
+	if err := s.get(tmdbURL, &tvAccountStates); err != nil {
 		return nil, err
 	}
 	return &tvAccountStates, nil
@@ -314,21 +314,21 @@ type TVAggregateCredits struct {
 // GetTVAggregateCredits get the aggregate credits (cast and crew) that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-aggregate-credits
-func (c *Client) GetTVAggregateCredits(
+func (s *Client) GetTVAggregateCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*TVAggregateCredits, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/aggregate_credits?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvAggregateCredits := TVAggregateCredits{}
-	if err := c.get(tmdbURL, &tvAggregateCredits); err != nil {
+	if err := s.get(tmdbURL, &tvAggregateCredits); err != nil {
 		return nil, err
 	}
 	return &tvAggregateCredits, nil
@@ -343,21 +343,21 @@ type TVAlternativeTitles struct {
 // GetTVAlternativeTitles get all of the alternative titles for a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-alternative-titles
-func (c *Client) GetTVAlternativeTitles(
+func (s *Client) GetTVAlternativeTitles(
 	id int,
 	urlOptions map[string]string,
 ) (*TVAlternativeTitles, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_titles?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvAlternativeTitles := TVAlternativeTitles{}
-	if err := c.get(tmdbURL, &tvAlternativeTitles); err != nil {
+	if err := s.get(tmdbURL, &tvAlternativeTitles); err != nil {
 		return nil, err
 	}
 	return &tvAlternativeTitles, nil
@@ -392,21 +392,21 @@ type TVChanges struct {
 // You can use the and methods to look these up individually.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-changes
-func (c *Client) GetTVChanges(
+func (s *Client) GetTVChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*TVChanges, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tVChanges := TVChanges{}
-	if err := c.get(tmdbURL, &tVChanges); err != nil {
+	if err := s.get(tmdbURL, &tVChanges); err != nil {
 		return nil, err
 	}
 	return &tVChanges, nil
@@ -421,21 +421,21 @@ type TVContentRatings struct {
 // GetTVContentRatings get the list of content ratings (certifications) that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-content-ratings
-func (c *Client) GetTVContentRatings(
+func (s *Client) GetTVContentRatings(
 	id int,
 	urlOptions map[string]string,
 ) (*TVContentRatings, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/content_ratings?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvContentRatings := TVContentRatings{}
-	if err := c.get(tmdbURL, &tvContentRatings); err != nil {
+	if err := s.get(tmdbURL, &tvContentRatings); err != nil {
 		return nil, err
 	}
 	return &tvContentRatings, nil
@@ -473,21 +473,21 @@ type TVCredits struct {
 // GetTVCredits get the credits (cast and crew) that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-credits
-func (c *Client) GetTVCredits(
+func (s *Client) GetTVCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*TVCredits, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/credits?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvCredits := TVCredits{}
-	if err := c.get(tmdbURL, &tvCredits); err != nil {
+	if err := s.get(tmdbURL, &tvCredits); err != nil {
 		return nil, err
 	}
 	return &tvCredits, nil
@@ -504,21 +504,21 @@ type TVEpisodeGroups struct {
 // With a group ID you can call the get TV episode group details method.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-episode-groups
-func (c *Client) GetTVEpisodeGroups(
+func (s *Client) GetTVEpisodeGroups(
 	id int,
 	urlOptions map[string]string,
 ) (*TVEpisodeGroups, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/episode_groups?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tVEpisodeGroups := TVEpisodeGroups{}
-	if err := c.get(tmdbURL, &tVEpisodeGroups); err != nil {
+	if err := s.get(tmdbURL, &tVEpisodeGroups); err != nil {
 		return nil, err
 	}
 	return &tVEpisodeGroups, nil
@@ -549,21 +549,21 @@ type TVExternalIDs struct {
 // *Defunct or no longer available as a service.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-external-ids
-func (c *Client) GetTVExternalIDs(
+func (s *Client) GetTVExternalIDs(
 	id int,
 	urlOptions map[string]string,
 ) (*TVExternalIDs, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvExternalIDs := TVExternalIDs{}
-	if err := c.get(tmdbURL, &tvExternalIDs); err != nil {
+	if err := s.get(tmdbURL, &tvExternalIDs); err != nil {
 		return nil, err
 	}
 	return &tvExternalIDs, nil
@@ -596,21 +596,21 @@ type TVImages struct {
 // separated value like so: include_image_language=en,null.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-images
-func (c *Client) GetTVImages(
+func (s *Client) GetTVImages(
 	id int,
 	urlOptions map[string]string,
 ) (*TVImages, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvImages := TVImages{}
-	if err := c.get(tmdbURL, &tvImages); err != nil {
+	if err := s.get(tmdbURL, &tvImages); err != nil {
 		return nil, err
 	}
 	return &tvImages, nil
@@ -625,7 +625,7 @@ type TVKeywords struct {
 // GetTVKeywords get the keywords that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-keywords
-func (c *Client) GetTVKeywords(
+func (s *Client) GetTVKeywords(
 	id int,
 ) (*TVKeywords, error) {
 	tmdbURL := fmt.Sprintf(
@@ -633,10 +633,10 @@ func (c *Client) GetTVKeywords(
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	tvKeywords := TVKeywords{}
-	if err := c.get(tmdbURL, &tvKeywords); err != nil {
+	if err := s.get(tmdbURL, &tvKeywords); err != nil {
 		return nil, err
 	}
 	return &tvKeywords, nil
@@ -653,21 +653,21 @@ type TVRecommendations struct {
 // GetTVRecommendations get the list of TV show recommendations for this item.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-recommendations
-func (c *Client) GetTVRecommendations(
+func (s *Client) GetTVRecommendations(
 	id int,
 	urlOptions map[string]string,
 ) (*TVRecommendations, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/recommendations?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvRecommendations := TVRecommendations{}
-	if err := c.get(tmdbURL, &tvRecommendations); err != nil {
+	if err := s.get(tmdbURL, &tvRecommendations); err != nil {
 		return nil, err
 	}
 	return &tvRecommendations, nil
@@ -685,21 +685,21 @@ type TVReviews struct {
 // GetTVReviews get the reviews for a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-reviews
-func (c *Client) GetTVReviews(
+func (s *Client) GetTVReviews(
 	id int,
 	urlOptions map[string]string,
 ) (*TVReviews, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/reviews?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvReviews := TVReviews{}
-	if err := c.get(tmdbURL, &tvReviews); err != nil {
+	if err := s.get(tmdbURL, &tvReviews); err != nil {
 		return nil, err
 	}
 	return &tvReviews, nil
@@ -715,7 +715,7 @@ type TVScreenedTheatrically struct {
 // have been screened in a film festival or theatre.
 //
 // https://developers.themoviedb.org/3/tv/get-screened-theatrically
-func (c *Client) GetTVScreenedTheatrically(
+func (s *Client) GetTVScreenedTheatrically(
 	id int,
 ) (*TVScreenedTheatrically, error) {
 	tmdbURL := fmt.Sprintf(
@@ -723,10 +723,10 @@ func (c *Client) GetTVScreenedTheatrically(
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	tvScreenedTheatrically := TVScreenedTheatrically{}
-	if err := c.get(tmdbURL, &tvScreenedTheatrically); err != nil {
+	if err := s.get(tmdbURL, &tvScreenedTheatrically); err != nil {
 		return nil, err
 	}
 	return &tvScreenedTheatrically, nil
@@ -741,21 +741,21 @@ type TVSimilar struct {
 // These items are assembled by looking at keywords and genres.
 //
 // https://developers.themoviedb.org/3/tv/get-similar-tv-shows
-func (c *Client) GetTVSimilar(
+func (s *Client) GetTVSimilar(
 	id int,
 	urlOptions map[string]string,
 ) (*TVSimilar, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/similar?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tVSimilar := TVSimilar{}
-	if err := c.get(tmdbURL, &tVSimilar); err != nil {
+	if err := s.get(tmdbURL, &tVSimilar); err != nil {
 		return nil, err
 	}
 	return &tVSimilar, nil
@@ -770,21 +770,21 @@ type TVWatchProviders struct {
 // GetTVWatchProviders get a list of the availabilities per country by provider for a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-watch-providers
-func (c *Client) GetTVWatchProviders(
+func (s *Client) GetTVWatchProviders(
 	id int,
 	urlOptions map[string]string,
 ) (*TVWatchProviders, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watch/providers?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvWatchProviders := TVWatchProviders{}
-	if err := c.get(tmdbURL, &tvWatchProviders); err != nil {
+	if err := s.get(tmdbURL, &tvWatchProviders); err != nil {
 		return nil, err
 	}
 	return &tvWatchProviders, nil
@@ -810,21 +810,21 @@ type TVTranslations struct {
 // GetTVTranslations get a list fo translations that have been created for a TV Show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-translations
-func (c *Client) GetTVTranslations(
+func (s *Client) GetTVTranslations(
 	id int,
 	urlOptions map[string]string,
 ) (*TVTranslations, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvTranslations := TVTranslations{}
-	if err := c.get(tmdbURL, &tvTranslations); err != nil {
+	if err := s.get(tmdbURL, &tvTranslations); err != nil {
 		return nil, err
 	}
 	return &tvTranslations, nil
@@ -839,21 +839,21 @@ type TVVideos struct {
 // GetTVVideos get the videos that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-videos
-func (c *Client) GetTVVideos(
+func (s *Client) GetTVVideos(
 	id int,
 	urlOptions map[string]string,
 ) (*TVVideos, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvVideos := TVVideos{}
-	if err := c.get(tmdbURL, &tvVideos); err != nil {
+	if err := s.get(tmdbURL, &tvVideos); err != nil {
 		return nil, err
 	}
 	return &tvVideos, nil
@@ -869,19 +869,19 @@ type TVLatest struct {
 // This is a live response and will continuously change.
 //
 // https://developers.themoviedb.org/3/tv/get-latest-tv
-func (c *Client) GetTVLatest(
+func (s *Client) GetTVLatest(
 	urlOptions map[string]string,
 ) (*TVLatest, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%slatest?api_key=%s%s",
 		baseURL,
 		tvURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvLatest := TVLatest{}
-	if err := c.get(tmdbURL, &tvLatest); err != nil {
+	if err := s.get(tmdbURL, &tvLatest); err != nil {
 		return nil, err
 	}
 	return &tvLatest, nil
@@ -904,19 +904,19 @@ type TVAiringToday struct {
 // to EST (Eastern Time UTC-05:00).
 //
 // https://developers.themoviedb.org/3/tv/get-tv-airing-today
-func (c *Client) GetTVAiringToday(
+func (s *Client) GetTVAiringToday(
 	urlOptions map[string]string,
 ) (*TVAiringToday, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sairing_today?api_key=%s%s",
 		baseURL,
 		tvURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvAiringToday := TVAiringToday{}
-	if err := c.get(tmdbURL, &tvAiringToday); err != nil {
+	if err := s.get(tmdbURL, &tvAiringToday); err != nil {
 		return nil, err
 	}
 	return &tvAiringToday, nil
@@ -933,19 +933,19 @@ type TVOnTheAir struct {
 // air date in the next 7 days.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-on-the-air
-func (c *Client) GetTVOnTheAir(
+func (s *Client) GetTVOnTheAir(
 	urlOptions map[string]string,
 ) (*TVOnTheAir, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%son_the_air?api_key=%s%s",
 		baseURL,
 		tvURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvOnTheAir := TVOnTheAir{}
-	if err := c.get(tmdbURL, &tvOnTheAir); err != nil {
+	if err := s.get(tmdbURL, &tvOnTheAir); err != nil {
 		return nil, err
 	}
 	return &tvOnTheAir, nil
@@ -960,19 +960,19 @@ type TVPopular struct {
 // This list updates daily.
 //
 // https://developers.themoviedb.org/3/tv/get-popular-tv-shows
-func (c *Client) GetTVPopular(
+func (s *Client) GetTVPopular(
 	urlOptions map[string]string,
 ) (*TVPopular, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s",
 		baseURL,
 		tvURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvPopular := TVPopular{}
-	if err := c.get(tmdbURL, &tvPopular); err != nil {
+	if err := s.get(tmdbURL, &tvPopular); err != nil {
 		return nil, err
 	}
 	return &tvPopular, nil
@@ -986,19 +986,19 @@ type TVTopRated struct {
 // GetTVTopRated get a list of the top rated TV shows on TMDb.
 //
 // https://developers.themoviedb.org/3/tv/get-top-rated-tv
-func (c *Client) GetTVTopRated(
+func (s *Client) GetTVTopRated(
 	urlOptions map[string]string,
 ) (*TVTopRated, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stop_rated?api_key=%s%s",
 		baseURL,
 		tvURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	tvTopRated := TVTopRated{}
-	if err := c.get(tmdbURL, &tvTopRated); err != nil {
+	if err := s.get(tmdbURL, &tvTopRated); err != nil {
 		return nil, err
 	}
 	return &tvTopRated, nil
@@ -1012,26 +1012,26 @@ func (c *Client) GetTVTopRated(
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 //
 // https://developers.themoviedb.org/3/tv/rate-tv-show
-func (c *Client) PostTVShowRating(
+func (s *Client) PostTVShowRating(
 	id int,
 	rating float32,
 	urlOptions map[string]string,
 ) (*Response, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	body := struct {
 		Value float32 `json:"value"`
 	}{Value: rating}
 	tvShowRating := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		body,
 		http.MethodPost,
@@ -1050,22 +1050,22 @@ func (c *Client) PostTVShowRating(
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 //
 // https://developers.themoviedb.org/3/tv/delete-tv-show-rating
-func (c *Client) DeleteTVShowRating(
+func (s *Client) DeleteTVShowRating(
 	id int,
 	urlOptions map[string]string,
 ) (*Response, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
 		baseURL,
 		tvURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	tvShowRating := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		[]byte{},
 		http.MethodDelete,

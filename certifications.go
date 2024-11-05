@@ -91,7 +91,7 @@ type CertificationMovie struct {
 // officially supported movie certifications on TMDb.
 //
 // https://developers.themoviedb.org/3/certifications/get-movie-certifications
-func (c *Client) GetCertificationMovie() (
+func (s *Client) GetCertificationMovie() (
 	*CertificationMovie,
 	error,
 ) {
@@ -99,10 +99,10 @@ func (c *Client) GetCertificationMovie() (
 		"%s/certification%slist?api_key=%s",
 		baseURL,
 		movieURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	certificationMovie := CertificationMovie{}
-	if err := c.get(tmdbURL, &certificationMovie); err != nil {
+	if err := s.get(tmdbURL, &certificationMovie); err != nil {
 		return nil, err
 	}
 	return &certificationMovie, nil
@@ -172,7 +172,7 @@ type CertificationTV struct {
 // officially supported TV show certifications on TMDb.
 //
 // https://developers.themoviedb.org/3/certifications/get-tv-certifications
-func (c *Client) GetCertificationTV() (
+func (s *Client) GetCertificationTV() (
 	*CertificationTV,
 	error,
 ) {
@@ -180,10 +180,10 @@ func (c *Client) GetCertificationTV() (
 		"%s/certification%slist?api_key=%s",
 		baseURL,
 		tvURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	certificationTV := CertificationTV{}
-	if err := c.get(tmdbURL, &certificationTV); err != nil {
+	if err := s.get(tmdbURL, &certificationTV); err != nil {
 		return nil, err
 	}
 	return &certificationTV, nil

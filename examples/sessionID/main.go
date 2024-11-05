@@ -8,10 +8,10 @@ import (
 )
 
 func main() {
-
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
+	tmdbClient, err := tmdb.Init(tmdb.DemoApiKey)
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	// A valid session or guest session ID is required.
@@ -20,8 +20,9 @@ func main() {
 	// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 	//
 	// Once you have the SessionID, you can load it from a ENV variable or a database.
-	if err := tmdbClient.SetSessionID(os.Getenv("SessionID")); err != nil {
+	if err = tmdbClient.SetSessionID(tmdb.DemoSessionID); err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	// PostMovieRating

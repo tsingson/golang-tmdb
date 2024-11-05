@@ -5,16 +5,16 @@ package tmdb
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"time"
 
+	"github.com/avast/retry-go/v4"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/valyala/fasthttp"
 )
 
 var json = jsoniter.ConfigFastest
@@ -45,7 +45,7 @@ const (
 	watchProvidersURL = "/watch/providers/"
 )
 
-var baseURL = defaultBaseURL
+var baseURL = alternateBaseURL
 
 // Client type is a struct to instantiate this pkg.
 type Client struct {
@@ -59,7 +59,10 @@ type Client struct {
 	// should retry the previous operation.
 	autoRetry bool
 	// http.Client for custom configuration.
-	http http.Client
+	// http    http.Client
+	Timeout time.Duration
+	req     *fasthttp.Request
+	resp    *fasthttp.Response
 }
 
 // Response type is a struct for http responses.
@@ -73,7 +76,14 @@ func Init(apiKey string) (*Client, error) {
 	if apiKey == "" {
 		return nil, errors.New("api key is empty")
 	}
-	return &Client{apiKey: apiKey}, nil
+	req := fasthttp.AcquireRequest()
+	resp := fasthttp.AcquireResponse()
+	return &Client{
+		apiKey:    apiKey,
+		req:       req,
+		resp:      resp,
+		sessionID: DemoSessionID,
+	}, nil
 }
 
 // InitV4 setups the Client with an bearer token.
@@ -81,26 +91,41 @@ func InitV4(bearerToken string) (*Client, error) {
 	if bearerToken == "" {
 		return nil, errors.New("bearer token is empty")
 	}
-	return &Client{bearerToken: bearerToken}, nil
+	req := fasthttp.AcquireRequest()
+	resp := fasthttp.AcquireResponse()
+	return &Client{
+		bearerToken: bearerToken,
+		req:         req,
+		resp:        resp,
+	}, nil
 }
 
 // SetSessionID will set the session id.
-func (c *Client) SetSessionID(sid string) error {
+func (s *Client) SetSessionID(sid string) error {
 	if sid == "" {
 		return errors.New("the session id is empty")
 	}
-	c.sessionID = sid
+	s.sessionID = sid
 	return nil
 }
 
 // SetClientConfig sets a custom configuration for the http.Client.
-func (c *Client) SetClientConfig(httpClient http.Client) {
-	c.http = httpClient
-}
+//func (c *Client) SetClientConfig(httpClient http.Client) {
+//	c.http = httpClient
+//}
 
 // SetClientAutoRetry sets autoRetry flag to true.
-func (c *Client) SetClientAutoRetry() {
-	c.autoRetry = true
+func (s *Client) SetClientAutoRetry() {
+	s.autoRetry = true
+}
+
+func (s *Client) Close() {
+	if s.resp != nil {
+		fasthttp.ReleaseResponse(s.resp)
+	}
+	if s.req != nil {
+		fasthttp.ReleaseRequest(s.req)
+	}
 }
 
 // Auto retry default duration.
@@ -125,103 +150,118 @@ func shouldRetry(status int) bool {
 	return status == http.StatusAccepted || status == http.StatusTooManyRequests
 }
 
-func (c *Client) get(url string, data interface{}) error {
+func (s *Client) get(url string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-	if c.http.Timeout == 0 {
-		c.http.Timeout = time.Second * 10
+	if s.Timeout == 0 {
+		s.Timeout = time.Second * 10
 	}
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	s.req.SetRequestURI(url)
+	// s.req.Header.SetContentType("application/json")
+	s.req.Header.Add("Accept", "application/json")
+	// s.req.Header.SetMethod("POST")
+	s.req.Header.SetMethod("GET")
+	s.req.Header.Add("content-type", "application/json;charset=utf-8")
+	if s.bearerToken != "" {
+		s.req.Header.Add("Authorization", "Bearer "+s.bearerToken)
+	}
+
+	err := fasthttp.DoTimeout(s.req, s.resp, s.Timeout)
 	if err != nil {
-		return fmt.Errorf("could not fetch the url: %s", err)
+		return err
 	}
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	req = req.WithContext(ctx)
-	req.Header.Add("content-type", "application/json;charset=utf-8")
-	if c.bearerToken != "" {
-		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
+	resBody := s.resp.Body()
+	code := s.resp.StatusCode()
+
+	if code == http.StatusTooManyRequests && s.autoRetry {
+		// TODO:tsingson
+		// return errors.New("too many requests")
+		// ------------------------
+		er1 := retry.Do(func() error {
+			return fasthttp.DoTimeout(s.req, s.resp, s.Timeout)
+		}, retry.Attempts(10), retry.Delay(time.Duration(15)*time.Second))
+		if er1 != nil {
+			return errors.New("too many requests")
+		}
 	}
-	for {
-		res, err := c.http.Do(req)
-		if err != nil {
-			return err
-		}
-		defer res.Body.Close()
-		if res.StatusCode == http.StatusTooManyRequests && c.autoRetry {
-			time.Sleep(retryDuration(res))
-			continue
-		}
-		if res.StatusCode == http.StatusNoContent {
-			return nil
-		}
-		if res.StatusCode != http.StatusOK {
-			return c.decodeError(res)
-		}
-		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
-			return fmt.Errorf("could not decode the data: %s", err)
-		}
-		break
+	resBody = s.resp.Body()
+	code = s.resp.StatusCode()
+	//
+	if code == http.StatusNoContent {
+		return nil
+	}
+	if code != http.StatusOK {
+		return s.decodeError(resBody, code)
+	}
+	buf := bytes.NewBuffer(resBody)
+	if err = json.NewDecoder(buf).Decode(data); err != nil {
+		return fmt.Errorf("could not decode the data: %s", err)
 	}
 	return nil
 }
 
-func (c *Client) request(
+func (s *Client) request(
 	url string,
-	body interface{},
+	requestPayload interface{},
 	method string,
 	data interface{},
 ) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-	if c.http.Timeout == 0 {
-		c.http.Timeout = time.Second * 10
+	if s.Timeout == 0 {
+		s.Timeout = time.Second * 10
 	}
 	bodyBytes := new(bytes.Buffer)
-	json.NewEncoder(bodyBytes).Encode(body)
-	req, err := http.NewRequest(
-		method,
-		url,
-		bytes.NewBuffer(bodyBytes.Bytes()),
-	)
+	json.NewEncoder(bodyBytes).Encode(requestPayload)
+
+	s.req.SetRequestURI(url)
+	// s.req.Header.SetContentType("application/json")
+	s.req.Header.Add("Accept", "application/json")
+	// s.req.Header.SetMethod("POST")
+	s.req.Header.SetMethod(method)
+	s.req.Header.Add("content-type", "application/json;charset=utf-8")
+	if s.bearerToken != "" {
+		s.req.Header.Add("Authorization", "Bearer "+s.bearerToken)
+	}
+
+	s.req.SetBody(bodyBytes.Bytes())
+
+	err := fasthttp.DoTimeout(s.req, s.resp, s.Timeout)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	req = req.WithContext(ctx)
-	req.Header.Add("content-type", "application/json;charset=utf-8")
-	if c.bearerToken != "" {
-		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
+	resBody := s.resp.Body()
+	code := s.resp.StatusCode()
+	if code == http.StatusTooManyRequests && s.autoRetry {
+		// TODO:tsingson
+		// return errors.New("too many requests")
+		// ------------------------
+		er1 := retry.Do(func() error {
+			return fasthttp.DoTimeout(s.req, s.resp, s.Timeout)
+		}, retry.Attempts(10), retry.Delay(time.Duration(15)*time.Second))
+		if er1 != nil {
+			return errors.New("too many requests")
+		}
 	}
-	for {
-		res, err := c.http.Do(req)
-		if err != nil {
-			return errors.New(err.Error())
-		}
-		defer res.Body.Close()
-		if c.autoRetry && shouldRetry(res.StatusCode) {
-			time.Sleep(retryDuration(res))
-			continue
-		}
-		// Checking if the response is greater or equal
-		// to 300 or less than 200.
-		if res.StatusCode >= http.StatusMultipleChoices ||
-			res.StatusCode < http.StatusOK ||
-			res.StatusCode == http.StatusNoContent {
-			return c.decodeError(res)
-		}
-		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
-			return fmt.Errorf("could not decode the data: %s", err)
-		}
-		break
+	resBody = s.resp.Body()
+	code = s.resp.StatusCode()
+	//
+	if code == http.StatusNoContent {
+		return nil
+	}
+	if code != http.StatusOK {
+		return s.decodeError(resBody, code)
+	}
+	buf := bytes.NewBuffer(resBody)
+	if err = json.NewDecoder(buf).Decode(data); err != nil {
+		return fmt.Errorf("could not decode the data: %s", err)
 	}
 	return nil
 }
 
-func (c *Client) fmtOptions(
+func (s *Client) fmtOptions(
 	urlOptions map[string]string,
 ) string {
 	options := ""
@@ -238,17 +278,17 @@ func (c *Client) fmtOptions(
 }
 
 // SetAlternateBaseURL sets an alternate base url.
-func (c *Client) SetAlternateBaseURL() {
+func (s *Client) SetAlternateBaseURL() {
 	baseURL = alternateBaseURL
 }
 
 // SetCustomBaseURL sets an custom base url.
-func (c *Client) SetCustomBaseURL(url string) {
+func (s *Client) SetCustomBaseURL(url string) {
 	baseURL = url
 }
 
 // GetBaseURL gets the current base url.
-func (c *Client) GetBaseURL() string {
+func (s *Client) GetBaseURL() string {
 	return baseURL
 }
 
@@ -268,16 +308,12 @@ func (e Error) Error() string {
 	)
 }
 
-func (c *Client) decodeError(r *http.Response) error {
-	resBody, err := io.ReadAll(r.Body)
-	if err != nil {
-		return fmt.Errorf("could not read body response: %s", err)
-	}
+func (s *Client) decodeError(resBody []byte, code int) error {
 	if len(resBody) == 0 {
 		return fmt.Errorf(
 			"[%d]: empty body %s",
-			r.StatusCode,
-			http.StatusText(r.StatusCode),
+			code,
+			http.StatusText(code),
 		)
 	}
 	buf := bytes.NewBuffer(resBody)

@@ -23,7 +23,7 @@ type CompanyDetails struct {
 // GetCompanyDetails get a companies details by id.
 //
 // https://developers.themoviedb.org/3/companies/get-company-details
-func (c *Client) GetCompanyDetails(
+func (s *Client) GetCompanyDetails(
 	id int,
 ) (*CompanyDetails, error) {
 	tmdbURL := fmt.Sprintf(
@@ -31,10 +31,10 @@ func (c *Client) GetCompanyDetails(
 		baseURL,
 		companyURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	companyDetails := CompanyDetails{}
-	if err := c.get(tmdbURL, &companyDetails); err != nil {
+	if err := s.get(tmdbURL, &companyDetails); err != nil {
 		return nil, err
 	}
 	return &companyDetails, nil
@@ -50,7 +50,7 @@ type CompanyAlternativeNames struct {
 // GetCompanyAlternativeNames get the alternative names of a company.
 //
 // https://developers.themoviedb.org/3/companies/get-company-alternative-names
-func (c *Client) GetCompanyAlternativeNames(
+func (s *Client) GetCompanyAlternativeNames(
 	id int,
 ) (*CompanyAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
@@ -58,10 +58,10 @@ func (c *Client) GetCompanyAlternativeNames(
 		baseURL,
 		companyURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	companyAlternativeNames := CompanyAlternativeNames{}
-	if err := c.get(tmdbURL, &companyAlternativeNames); err != nil {
+	if err := s.get(tmdbURL, &companyAlternativeNames); err != nil {
 		return nil, err
 	}
 	return &companyAlternativeNames, nil
@@ -96,7 +96,7 @@ type CompanyImages struct {
 // call them as a PNG.
 //
 // https://developers.themoviedb.org/3/companies/get-company-images
-func (c *Client) GetCompanyImages(
+func (s *Client) GetCompanyImages(
 	id int,
 ) (*CompanyImages, error) {
 	tmdbURL := fmt.Sprintf(
@@ -104,10 +104,10 @@ func (c *Client) GetCompanyImages(
 		baseURL,
 		companyURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	companyImages := CompanyImages{}
-	if err := c.get(tmdbURL, &companyImages); err != nil {
+	if err := s.get(tmdbURL, &companyImages); err != nil {
 		return nil, err
 	}
 	return &companyImages, nil

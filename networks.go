@@ -15,7 +15,7 @@ type NetworkDetails struct {
 // GetNetworkDetails get the details of a network.
 //
 // https://developers.themoviedb.org/3/networks/get-network-details
-func (c *Client) GetNetworkDetails(
+func (s *Client) GetNetworkDetails(
 	id int,
 ) (*NetworkDetails, error) {
 	tmdbURL := fmt.Sprintf(
@@ -23,10 +23,10 @@ func (c *Client) GetNetworkDetails(
 		baseURL,
 		networkURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	networkDetails := NetworkDetails{}
-	if err := c.get(tmdbURL, &networkDetails); err != nil {
+	if err := s.get(tmdbURL, &networkDetails); err != nil {
 		return nil, err
 	}
 	return &networkDetails, nil
@@ -44,7 +44,7 @@ type NetworkAlternativeNames struct {
 // GetNetworkAlternativeNames get the alternative names of a network.
 //
 // https://developers.themoviedb.org/3/networks/get-network-alternative-names
-func (c *Client) GetNetworkAlternativeNames(
+func (s *Client) GetNetworkAlternativeNames(
 	id int,
 ) (*NetworkAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
@@ -52,10 +52,10 @@ func (c *Client) GetNetworkAlternativeNames(
 		baseURL,
 		networkURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	networkAltenativeNames := NetworkAlternativeNames{}
-	if err := c.get(tmdbURL, &networkAltenativeNames); err != nil {
+	if err := s.get(tmdbURL, &networkAltenativeNames); err != nil {
 		return nil, err
 	}
 	return &networkAltenativeNames, nil
@@ -90,7 +90,7 @@ type NetworkImages struct {
 // call them as a PNG.
 //
 // https://developers.themoviedb.org/3/networks/get-network-images
-func (c *Client) GetNetworkImages(
+func (s *Client) GetNetworkImages(
 	id int,
 ) (*NetworkImages, error) {
 	tmdbURL := fmt.Sprintf(
@@ -98,10 +98,10 @@ func (c *Client) GetNetworkImages(
 		baseURL,
 		networkURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	networkImages := NetworkImages{}
-	if err := c.get(tmdbURL, &networkImages); err != nil {
+	if err := s.get(tmdbURL, &networkImages); err != nil {
 		return nil, err
 	}
 	return &networkImages, nil

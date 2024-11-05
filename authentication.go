@@ -16,15 +16,15 @@ type RequestToken struct {
 // that can be used to validate a TMDb user login.
 //
 // https://developers.themoviedb.org/3/authentication/create-guest-session
-func (c *Client) CreateGuestSession() (*RequestToken, error) {
+func (s *Client) CreateGuestSession() (*RequestToken, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%sguest_session/new?api_key=%s",
 		baseURL,
 		authenticationURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	requestToken := RequestToken{}
-	if err := c.get(tmdbURL, &requestToken); err != nil {
+	if err := s.get(tmdbURL, &requestToken); err != nil {
 		return nil, err
 	}
 	return &requestToken, nil
@@ -34,15 +34,15 @@ func (c *Client) CreateGuestSession() (*RequestToken, error) {
 // that can be used to validate a TMDb user login.
 //
 // https://developers.themoviedb.org/3/authentication/create-request-token
-func (c *Client) CreateRequestToken() (*RequestToken, error) {
+func (s *Client) CreateRequestToken() (*RequestToken, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%stoken/new?api_key=%s",
 		baseURL,
 		authenticationURL,
-		c.apiKey,
+		s.apiKey,
 	)
 	requestToken := RequestToken{}
-	if err := c.get(tmdbURL, &requestToken); err != nil {
+	if err := s.get(tmdbURL, &requestToken); err != nil {
 		return nil, err
 	}
 	return &requestToken, nil

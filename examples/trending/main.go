@@ -8,16 +8,16 @@ import (
 )
 
 func main() {
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
-
+	tmdbClient, err := tmdb.Init(tmdb.DemoApiKey)
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	trending, err := tmdbClient.GetTrending("movie", "week", nil)
-
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	for _, result := range trending.Results {
@@ -32,7 +32,6 @@ func main() {
 	options["language"] = "es-ES"
 
 	trending, err = tmdbClient.GetTrending("tv", "day", options)
-
 	if err != nil {
 		fmt.Println(err)
 	}

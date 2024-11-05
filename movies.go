@@ -154,21 +154,21 @@ type MovieWatchProvidersAppend struct {
 // GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
-func (c *Client) GetMovieDetails(
+func (s *Client) GetMovieDetails(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieDetails, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieDetails := MovieDetails{}
-	if err := c.get(tmdbURL, &movieDetails); err != nil {
+	if err := s.get(tmdbURL, &movieDetails); err != nil {
 		return nil, err
 	}
 	return &movieDetails, nil
@@ -191,21 +191,21 @@ type MovieAccountStates struct {
 // If it belongs to your favourite list.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-account-states
-func (c *Client) GetMovieAccountStates(
+func (s *Client) GetMovieAccountStates(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieAccountStates, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/account_states?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieAccountStates := MovieAccountStates{}
-	if err := c.get(tmdbURL, &movieAccountStates); err != nil {
+	if err := s.get(tmdbURL, &movieAccountStates); err != nil {
 		return nil, err
 	}
 	return &movieAccountStates, nil
@@ -224,21 +224,21 @@ type MovieAlternativeTitles struct {
 // GetMovieAlternativeTitles get all of the alternative titles for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-alternative-titles
-func (c *Client) GetMovieAlternativeTitles(
+func (s *Client) GetMovieAlternativeTitles(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieAlternativeTitles, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_titles?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieAlternativeTitles := MovieAlternativeTitles{}
-	if err := c.get(tmdbURL, &movieAlternativeTitles); err != nil {
+	if err := s.get(tmdbURL, &movieAlternativeTitles); err != nil {
 		return nil, err
 	}
 	return &movieAlternativeTitles, nil
@@ -266,21 +266,21 @@ type MovieChanges struct {
 // the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-changes
-func (c *Client) GetMovieChanges(
+func (s *Client) GetMovieChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieChanges, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieChanges := MovieChanges{}
-	if err := c.get(tmdbURL, &movieChanges); err != nil {
+	if err := s.get(tmdbURL, &movieChanges); err != nil {
 		return nil, err
 	}
 	return &movieChanges, nil
@@ -321,20 +321,20 @@ type MovieCredits struct {
 // GetMovieCredits get the cast and crew for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-credits
-func (c *Client) GetMovieCredits(
+func (s *Client) GetMovieCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieCredits, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf("%s%s%d/credits?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieCredits := MovieCredits{}
-	if err := c.get(tmdbURL, &movieCredits); err != nil {
+	if err := s.get(tmdbURL, &movieCredits); err != nil {
 		return nil, err
 	}
 	return &movieCredits, nil
@@ -359,21 +359,21 @@ type MovieExternalIDs struct {
 // Social IDs: Facebook, Instagram and Twitter.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-external-ids
-func (c *Client) GetMovieExternalIDs(
+func (s *Client) GetMovieExternalIDs(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieExternalIDs, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieExternalIDs := MovieExternalIDs{}
-	if err := c.get(tmdbURL, &movieExternalIDs); err != nil {
+	if err := s.get(tmdbURL, &movieExternalIDs); err != nil {
 		return nil, err
 	}
 	return &movieExternalIDs, nil
@@ -406,21 +406,21 @@ type MovieImages struct {
 // separated value like so: include_image_language=en,null.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-images
-func (c *Client) GetMovieImages(
+func (s *Client) GetMovieImages(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieImages, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieImages := MovieImages{}
-	if err := c.get(tmdbURL, &movieImages); err != nil {
+	if err := s.get(tmdbURL, &movieImages); err != nil {
 		return nil, err
 	}
 	return &movieImages, nil
@@ -438,16 +438,16 @@ type MovieKeywords struct {
 // GetMovieKeywords get the keywords that have been added to a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-keywords
-func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
+func (s *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/keywords?api_key=%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	movieKeywords := MovieKeywords{}
-	if err := c.get(tmdbURL, &movieKeywords); err != nil {
+	if err := s.get(tmdbURL, &movieKeywords); err != nil {
 		return nil, err
 	}
 	return &movieKeywords, nil
@@ -462,7 +462,7 @@ type MovieReleaseDates struct {
 // GetMovieReleaseDates get the release date along with the certification for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-release-dates
-func (c *Client) GetMovieReleaseDates(
+func (s *Client) GetMovieReleaseDates(
 	id int,
 ) (*MovieReleaseDates, error) {
 	tmdbURL := fmt.Sprintf(
@@ -470,10 +470,10 @@ func (c *Client) GetMovieReleaseDates(
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 	)
 	movieReleaseDates := MovieReleaseDates{}
-	if err := c.get(tmdbURL, &movieReleaseDates); err != nil {
+	if err := s.get(tmdbURL, &movieReleaseDates); err != nil {
 		return nil, err
 	}
 	return &movieReleaseDates, nil
@@ -488,21 +488,21 @@ type MovieVideos struct {
 // GetMovieVideos get the videos that have been added to a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-videos
-func (c *Client) GetMovieVideos(
+func (s *Client) GetMovieVideos(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieVideos, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieVideos := MovieVideos{}
-	if err := c.get(tmdbURL, &movieVideos); err != nil {
+	if err := s.get(tmdbURL, &movieVideos); err != nil {
 		return nil, err
 	}
 	return &movieVideos, nil
@@ -517,21 +517,21 @@ type MovieWatchProviders struct {
 // GetMovieWatchProviders get a list of the availabilities per country by provider for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-watch-providers
-func (c *Client) GetMovieWatchProviders(
+func (s *Client) GetMovieWatchProviders(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieWatchProviders, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watch/providers?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieWatchProviders := MovieWatchProviders{}
-	if err := c.get(tmdbURL, &movieWatchProviders); err != nil {
+	if err := s.get(tmdbURL, &movieWatchProviders); err != nil {
 		return nil, err
 	}
 	return &movieWatchProviders, nil
@@ -558,21 +558,21 @@ type MovieTranslations struct {
 // GetMovieTranslations get a list of translations that have been created for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-translations
-func (c *Client) GetMovieTranslations(
+func (s *Client) GetMovieTranslations(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieTranslations, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieTranslations := MovieTranslations{}
-	if err := c.get(tmdbURL, &movieTranslations); err != nil {
+	if err := s.get(tmdbURL, &movieTranslations); err != nil {
 		return nil, err
 	}
 	return &movieTranslations, nil
@@ -589,21 +589,21 @@ type MovieRecommendations struct {
 // GetMovieRecommendations get a list of recommended movies for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-recommendations
-func (c *Client) GetMovieRecommendations(
+func (s *Client) GetMovieRecommendations(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieRecommendations, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/recommendations?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieRecommendations := MovieRecommendations{}
-	if err := c.get(tmdbURL, &movieRecommendations); err != nil {
+	if err := s.get(tmdbURL, &movieRecommendations); err != nil {
 		return nil, err
 	}
 	return &movieRecommendations, nil
@@ -620,21 +620,21 @@ type MovieSimilar struct {
 // These items are assembled by looking at keywords and genres.
 //
 // https://developers.themoviedb.org/3/movies/get-similar-movies
-func (c *Client) GetMovieSimilar(
+func (s *Client) GetMovieSimilar(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieSimilar, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/similar?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieSimilar := MovieSimilar{}
-	if err := c.get(tmdbURL, &movieSimilar); err != nil {
+	if err := s.get(tmdbURL, &movieSimilar); err != nil {
 		return nil, err
 	}
 	return &movieSimilar, nil
@@ -652,21 +652,21 @@ type MovieReviews struct {
 // GetMovieReviews get the user reviews for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-reviews
-func (c *Client) GetMovieReviews(
+func (s *Client) GetMovieReviews(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieReviews, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/reviews?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieReviews := MovieReviews{}
-	if err := c.get(tmdbURL, &movieReviews); err != nil {
+	if err := s.get(tmdbURL, &movieReviews); err != nil {
 		return nil, err
 	}
 	return &movieReviews, nil
@@ -684,21 +684,21 @@ type MovieLists struct {
 // GetMovieLists get a list of lists that this movie belongs to.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-lists
-func (c *Client) GetMovieLists(
+func (s *Client) GetMovieLists(
 	id int,
 	urlOptions map[string]string,
 ) (*MovieLists, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/lists?api_key=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieLists := MovieLists{}
-	if err := c.get(tmdbURL, &movieLists); err != nil {
+	if err := s.get(tmdbURL, &movieLists); err != nil {
 		return nil, err
 	}
 	return &movieLists, nil
@@ -714,19 +714,19 @@ type MovieLatest struct {
 // This is a live response and will continuously change.
 //
 // https://developers.themoviedb.org/3/movies/get-latest-movie
-func (c *Client) GetMovieLatest(
+func (s *Client) GetMovieLatest(
 	urlOptions map[string]string,
 ) (*MovieLatest, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%slatest?api_key=%s%s",
 		baseURL,
 		movieURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieLastest := MovieLatest{}
-	if err := c.get(tmdbURL, &movieLastest); err != nil {
+	if err := s.get(tmdbURL, &movieLastest); err != nil {
 		return nil, err
 	}
 	return &movieLastest, nil
@@ -754,19 +754,19 @@ type MovieNowPlaying struct {
 // specified country.
 //
 // https://developers.themoviedb.org/3/movies/get-now-playing
-func (c *Client) GetMovieNowPlaying(
+func (s *Client) GetMovieNowPlaying(
 	urlOptions map[string]string,
 ) (*MovieNowPlaying, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%snow_playing?api_key=%s%s",
 		baseURL,
 		movieURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieNowPlaying := MovieNowPlaying{}
-	if err := c.get(tmdbURL, &movieNowPlaying); err != nil {
+	if err := s.get(tmdbURL, &movieNowPlaying); err != nil {
 		return nil, err
 	}
 	return &movieNowPlaying, nil
@@ -785,19 +785,19 @@ type MoviePopular struct {
 // This list updates daily.
 //
 // https://developers.themoviedb.org/3/movies/get-popular-movies
-func (c *Client) GetMoviePopular(
+func (s *Client) GetMoviePopular(
 	urlOptions map[string]string,
 ) (*MoviePopular, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s",
 		baseURL,
 		movieURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	moviePopular := MoviePopular{}
-	if err := c.get(tmdbURL, &moviePopular); err != nil {
+	if err := s.get(tmdbURL, &moviePopular); err != nil {
 		return nil, err
 	}
 	return &moviePopular, nil
@@ -811,19 +811,19 @@ type MovieTopRated struct {
 // GetMovieTopRated get the top rated movies on TMDb.
 //
 // https://developers.themoviedb.org/3/movies/get-top-rated-movies
-func (c *Client) GetMovieTopRated(
+func (s *Client) GetMovieTopRated(
 	urlOptions map[string]string,
 ) (*MovieTopRated, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stop_rated?api_key=%s%s",
 		baseURL,
 		movieURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieTopRated := MovieTopRated{}
-	if err := c.get(tmdbURL, &movieTopRated); err != nil {
+	if err := s.get(tmdbURL, &movieTopRated); err != nil {
 		return nil, err
 	}
 	return &movieTopRated, nil
@@ -844,19 +844,19 @@ type MovieUpcoming struct {
 // the specified country.
 //
 // https://developers.themoviedb.org/3/movies/get-upcoming
-func (c *Client) GetMovieUpcoming(
+func (s *Client) GetMovieUpcoming(
 	urlOptions map[string]string,
 ) (*MovieUpcoming, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%supcoming?api_key=%s%s",
 		baseURL,
 		movieURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	movieUpcoming := MovieUpcoming{}
-	if err := c.get(tmdbURL, &movieUpcoming); err != nil {
+	if err := s.get(tmdbURL, &movieUpcoming); err != nil {
 		return nil, err
 	}
 	return &movieUpcoming, nil
@@ -870,26 +870,26 @@ func (c *Client) GetMovieUpcoming(
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 //
 // https://developers.themoviedb.org/3/movies/rate-movie
-func (c *Client) PostMovieRating(
+func (s *Client) PostMovieRating(
 	id int,
 	rating float32,
 	urlOptions map[string]string,
 ) (*Response, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	body := struct {
 		Value float32 `json:"value"`
 	}{Value: rating}
 	response := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		body,
 		http.MethodPost,
@@ -908,22 +908,22 @@ func (c *Client) PostMovieRating(
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 //
 // https://developers.themoviedb.org/3/movies/delete-movie-rating
-func (c *Client) DeleteMovieRating(
+func (s *Client) DeleteMovieRating(
 	id int,
 	urlOptions map[string]string,
 ) (*Response, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
 		baseURL,
 		movieURL,
 		id,
-		c.apiKey,
-		c.sessionID,
+		s.apiKey,
+		s.sessionID,
 		options,
 	)
 	response := Response{}
-	if err := c.request(
+	if err := s.request(
 		tmdbURL,
 		[]byte{},
 		http.MethodDelete,

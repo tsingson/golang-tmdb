@@ -37,22 +37,22 @@ type Trending struct {
 // week - View the trending list for the week.
 //
 // https://developers.themoviedb.org/3/trending/get-trending
-func (c *Client) GetTrending(
+func (s *Client) GetTrending(
 	mediaType string,
 	timeWindow string,
 	urlOptions map[string]string,
 ) (*Trending, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s/trending/%s/%s?api_key=%s%s",
 		baseURL,
 		mediaType,
 		timeWindow,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	trending := Trending{}
-	if err := c.get(tmdbURL, &trending); err != nil {
+	if err := s.get(tmdbURL, &trending); err != nil {
 		return nil, err
 	}
 	return &trending, nil

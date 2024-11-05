@@ -13,19 +13,19 @@ type GenreMovieList struct {
 // GetGenreMovieList get the list of official genres for movies.
 //
 // https://developers.themoviedb.org/3/genres/get-movie-list
-func (c *Client) GetGenreMovieList(
+func (s *Client) GetGenreMovieList(
 	urlOptions map[string]string,
 ) (*GenreMovieList, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie/list?api_key=%s%s",
 		baseURL,
 		genreURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	genreMovieList := GenreMovieList{}
-	if err := c.get(tmdbURL, &genreMovieList); err != nil {
+	if err := s.get(tmdbURL, &genreMovieList); err != nil {
 		return nil, err
 	}
 	return &genreMovieList, nil
@@ -34,19 +34,19 @@ func (c *Client) GetGenreMovieList(
 // GetGenreTVList get the list of official genres for TV shows.
 //
 // https://developers.themoviedb.org/3/genres/get-tv-list
-func (c *Client) GetGenreTVList(
+func (s *Client) GetGenreTVList(
 	urlOptions map[string]string,
 ) (*GenreMovieList, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv/list?api_key=%s%s",
 		baseURL,
 		genreURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	genreTVList := GenreMovieList{}
-	if err := c.get(tmdbURL, &genreTVList); err != nil {
+	if err := s.get(tmdbURL, &genreTVList); err != nil {
 		return nil, err
 	}
 	return &genreTVList, nil

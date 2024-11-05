@@ -18,19 +18,19 @@ type ChangesMovie struct {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-movie-change-list
-func (c *Client) GetChangesMovie(
+func (s *Client) GetChangesMovie(
 	urlOptions map[string]string,
 ) (*ChangesMovie, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
 		baseURL,
 		movieURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	changesMovies := ChangesMovie{}
-	if err := c.get(tmdbURL, &changesMovies); err != nil {
+	if err := s.get(tmdbURL, &changesMovies); err != nil {
 		return nil, err
 	}
 	return &changesMovies, nil
@@ -49,19 +49,19 @@ type ChangesTV struct {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-tv-change-list
-func (c *Client) GetChangesTV(
+func (s *Client) GetChangesTV(
 	urlOptions map[string]string,
 ) (*ChangesTV, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
 		baseURL,
 		tvURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	changesTV := ChangesTV{}
-	if err := c.get(tmdbURL, &changesTV); err != nil {
+	if err := s.get(tmdbURL, &changesTV); err != nil {
 		return nil, err
 	}
 	return &changesTV, nil
@@ -80,19 +80,19 @@ type ChangesPerson struct {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-person-change-list
-func (c *Client) GetChangesPerson(
+func (s *Client) GetChangesPerson(
 	urlOptions map[string]string,
 ) (*ChangesPerson, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
 		baseURL,
 		personURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	changesPerson := ChangesPerson{}
-	if err := c.get(tmdbURL, &changesPerson); err != nil {
+	if err := s.get(tmdbURL, &changesPerson); err != nil {
 		return nil, err
 	}
 	return &changesPerson, nil

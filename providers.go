@@ -27,19 +27,19 @@ type WatchProviderList struct {
 // GetAvailableWatchProviderRegions get a list of all of the countries we have watch provider (OTT/streaming) data for.
 //
 // https://developers.themoviedb.org/3/watch-providers/get-available-regions
-func (c *Client) GetAvailableWatchProviderRegions(
+func (s *Client) GetAvailableWatchProviderRegions(
 	urlOptions map[string]string,
 ) (*WatchRegionList, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sregions?api_key=%s%s",
 		baseURL,
 		watchProvidersURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	watchRegionList := WatchRegionList{}
-	if err := c.get(tmdbURL, &watchRegionList); err != nil {
+	if err := s.get(tmdbURL, &watchRegionList); err != nil {
 		return nil, err
 	}
 	return &watchRegionList, nil
@@ -49,19 +49,19 @@ func (c *Client) GetAvailableWatchProviderRegions(
 // You can specify a watch_region param if you want to further filter the list by country.
 //
 // https://developers.themoviedb.org/3/watch-providers/get-movie-providers
-func (c *Client) GetWatchProvidersMovie(
+func (s *Client) GetWatchProvidersMovie(
 	urlOptions map[string]string,
 ) (*WatchProviderList, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s%s",
 		baseURL,
 		watchProvidersURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	watchProvider := WatchProviderList{}
-	if err := c.get(tmdbURL, &watchProvider); err != nil {
+	if err := s.get(tmdbURL, &watchProvider); err != nil {
 		return nil, err
 	}
 	return &watchProvider, nil
@@ -71,19 +71,19 @@ func (c *Client) GetWatchProvidersMovie(
 // You can specify a watch_region param if you want to further filter the list by country.
 //
 // https://developers.themoviedb.org/3/watch-providers/get-tv-providers
-func (c *Client) GetWatchProvidersTv(
+func (s *Client) GetWatchProvidersTv(
 	urlOptions map[string]string,
 ) (*WatchProviderList, error) {
-	options := c.fmtOptions(urlOptions)
+	options := s.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s%s",
 		baseURL,
 		watchProvidersURL,
-		c.apiKey,
+		s.apiKey,
 		options,
 	)
 	watchProvider := WatchProviderList{}
-	if err := c.get(tmdbURL, &watchProvider); err != nil {
+	if err := s.get(tmdbURL, &watchProvider); err != nil {
 		return nil, err
 	}
 	return &watchProvider, nil
