@@ -8,8 +8,10 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-const sessionID = "a5722b9dd3467bd630c28e9ca63baf880c9940ae"
-const apiKey = "9aca69849a23528a419aea463387945f"
+const (
+	sessionID = "a5722b9dd3467bd630c28e9ca63baf880c9940ae"
+	apiKey    = "9aca69849a23528a419aea463387945f"
+)
 
 type TMBDTestSuite struct {
 	suite.Suite

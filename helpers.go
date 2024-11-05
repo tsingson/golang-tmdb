@@ -61,7 +61,7 @@ var imageSize = map[string]string{
 // original - backdrop/logo/poster/profile/still
 //
 // https://developers.themoviedb.org/3/configuration/get-api-configuration
-func GetImageURL(key string, size string) string {
+func GetImageURL(key, size string) string {
 	return imageSize[size] + key
 }
 

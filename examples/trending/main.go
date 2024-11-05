@@ -9,13 +9,11 @@ import (
 
 func main() {
 	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
-
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	trending, err := tmdbClient.GetTrending("movie", "week", nil)
-
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -32,7 +30,6 @@ func main() {
 	options["language"] = "es-ES"
 
 	trending, err = tmdbClient.GetTrending("tv", "day", options)
-
 	if err != nil {
 		fmt.Println(err)
 	}

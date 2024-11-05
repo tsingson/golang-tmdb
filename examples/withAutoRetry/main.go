@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
 	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
 
 	// Enabling auto retry functionality.
@@ -19,7 +18,6 @@ func main() {
 	}
 
 	movie, err := tmdbClient.GetMovieDetails(299536, nil)
-
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -34,7 +32,6 @@ func main() {
 	options["language"] = "pt-BR"
 
 	movie, err = tmdbClient.GetMovieDetails(299536, options)
-
 	if err != nil {
 		fmt.Println(err)
 	}

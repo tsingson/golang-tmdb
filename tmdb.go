@@ -45,7 +45,7 @@ const (
 	watchProvidersURL = "/watch/providers/"
 )
 
-var baseURL = defaultBaseURL
+var baseURL = alternateBaseURL
 
 // Client type is a struct to instantiate this pkg.
 type Client struct {

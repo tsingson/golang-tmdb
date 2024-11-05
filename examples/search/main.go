@@ -9,7 +9,6 @@ import (
 
 func main() {
 	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
-
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -19,7 +18,6 @@ func main() {
 
 	// Multi Search
 	search, err := tmdbClient.GetSearchMulti("Dexter", options)
-
 	if err != nil {
 		fmt.Println(err)
 	}
